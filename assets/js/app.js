@@ -209,10 +209,12 @@ search.addEventListener('keyup', onKeyUp)
 
 // --------------------------top 10 country data ++++  getting -------------------------
 
-let graphContainer=document.getElementById('graphContainer');
+let chartBarStatus=document.getElementById('chartBarStatus');
+let title=document.getElementById('title');
+
 let populationbtnicon=document.getElementById('populationbtnicon');
-let languagebtn=document.getElementById('languagebtn');
-let graphWrapper=document.getElementById('graph-container')
+let languagebtnicon=document.getElementById('languagebtnicon');
+
 
 
 // ------------------------------top 10 country data ++++  event function------------------
@@ -248,73 +250,101 @@ const renderPopuGraph = () => {
   };
 
 
-//   --------------------------top 10 country data ++++  populationevent----------------------
+
+const displayGraphPop=()=>{
+  const worldPopulation=countries.reduce((a,b)=>a+b.population, 0);
+  const topCountryPop=countries.sort((a,b)=>b.population-a.population).slice(0,10);
   
-  populationbtnicon.addEventListener("click", () => {
-    renderPopuGraph(countries);
+
+  let result=`
+               <div class="row mt-2">
+                <div class="col-md-2">
+                    <h5>world</h5>
+                </div>
+                <div class="col-md-8">
+                    <div class="bar">
+                        <div class="percentage"></div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h5>${worldPopulation}</h5>
+                </div>
+            </div>
+  `;
+
+  topCountryPop.forEach((country)=>{
+    result+=`
+               <div class="row mt-2">
+                <div class="col-md-2">
+                    <h5>${country.name}</h5>
+                </div>
+                <div class="col-md-8">
+                    <div class="bar">
+                        <div class="percentage" style="width:${(country.population/worldPopulation)*100}%"></div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h5>${worldPopulation}</h5>
+                </div>
+            </div>
+  `;
   });
-  
+
+  chartBarStatus.innerHTML=result;
+  title.innerHTML=`10 Most Populated country in World`
+
+};
+displayGraphPop();
+
+let onClickGraphPop=()=>{
+    displayGraphPop();
+}
+
+let onClickGraphlang=()=>{
+  const languageCountryArray=[];
+  countries.forEach(country=>{
+    country.languages.forEach(language=>{
+
+    let existingObj=languageCountryArray.find(obj=>obj.language===language);
+    if(existingObj){
+      existingObj.count+=1
+    }else{
+      languageCountryArray.push({language: language, count:1});
+    }
+    });
+  });
+  let topSpokanLang=languageCountryArray.sort((a,b)=>b.count-a.count).slice(0,10);
+
+  result=' ';
+  topSpokanLang.forEach(obj=>{
+    result+=`
+              <div class="row mt-2">
+                <div class="col-md-2">
+                    <h5>${obj.language}</h5>
+                </div>
+                <div class="col-md-8">
+                    <div class="bar">
+                        <div class="percentage" style="width:${(obj.count/100)*100}%"></div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h5>${obj.count}</h5>
+                </div>
+            </div>
+    `
+  })
+  chartBarStatus.innerHTML=result;
+  title.innerHTML=`10 Most spoken Languages in World`
+
+};
 
 
 
 
 
-// const renderPopulationGraph = (data=countries) => {
 
-//     const totalPopulation = data.reduce((sum, country) => sum + country.population, 0);
-//     let content = "";
-//     content += `
-//       <div class="bars">
-
-//             <table>
-//                     <tr>
-//                         <td>wold</td>
-//                         <td class="bar" style="width:100%; height: 35px; background-color: orange;"></td>
-//                         <td>${totalPopulation.toLocaleString()}</td>
-//                     </tr>
-//              </table>
-//         </div>
-//     `;
-
-//     data.forEach((country) => {
-//       const percentage = ((country.population / totalPopulation) * 100).toFixed(2);
-//       content += `
-//         <div class="bars">
-//             <table>
-//                     <tr>
-//                         <td>${country.name}</td>
-//                         <td class="bar" style="width:${percentage}%; height: 35px; background-color: orange;"></td>
-//                         <td>${country.population.toLocaleString()}</td>
-//                     </tr>
-//              </table>
-//         </div>
-//       `;
-//     });
-  
-//     graphWrapper.innerHTML = content;
-//   };
-
-
-
-//   <ul>
-//   <div>${country.name}</div>
-//   <div class="bar" style="width:${percentage}%; height: 35px; background-color: orange;"></div>
-//   <div>${country.population.toLocaleString()}</div>
-//   </ul>
-
-// { <div class="bars">
-// <div>World</div>
-// <div class="bar" style="width:100%; height: 35px; background-color: orange;"></div>
-// <div>${totalPopulation.toLocaleString()}</div>
-// </div> }
-
-
-
-
-// populationbtn.addEventListener("click", () => {
-//         renderPopulationGraph(countries);})
-
-
+  populationbtnicon.addEventListener("click",onClickGraphPop)
+  languagebtnicon.addEventListener("click",onClickGraphlang)
 
 
 
@@ -329,68 +359,4 @@ const renderPopuGraph = () => {
 
 
 
-
-
-
-
-
-
-
-
-// // Array containing country data
-// const countries = [
-//     // Add the data here from the provided array
-//     { name: "China", population: 1402112000 },
-//     { name: "India", population: 1380004385 },
-//     { name: "USA", population: 329484123 },
-//     { name: "Indonesia", population: 273523621 },
-//     { name: "Pakistan", population: 220892331 },
-//     { name: "Brazil", population: 212559409 },
-//     { name: "Nigeria", population: 206139587 },
-//     { name: "Bangladesh", population: 164689383 },
-//     { name: "Russia", population: 144104080 },
-//     { name: "Mexico", population: 128932753 }
-//   ];
-  
-//   // Function to generate the population graph
-//   const renderPopulationGraph = (data) => {
-//     // Get the wrapper element where the graph will be displayed
-//     const graphWrapper = document.getElementById("graphWrapper");
-  
-//     // Calculate the total world population
-//     const totalPopulation = data.reduce((sum, country) => sum + country.population, 0);
-  
-//     // Create HTML content for the graph
-//     let content = "";
-    
-//     // Add the world population to the graph
-//     content += `
-//       <div class="bars">
-//         <div>World</div>
-//         <div class="bar" style="width:100%; height: 35px; background-color: orange;"></div>
-//         <div>${totalPopulation.toLocaleString()}</div>
-//       </div>
-//     `;
-  
-//     // Add each country's population to the graph
-//     data.forEach((country) => {
-//       const percentage = ((country.population / totalPopulation) * 100).toFixed(2);
-//       content += `
-//         <div class="bars">
-//           <div>${country.name}</div>
-//           <div class="bar" style="width:${percentage}%; height: 35px; background-color: orange;"></div>
-//           <div>${country.population.toLocaleString()}</div>
-//         </div>
-//       `;
-//     });
-  
-//     // Set the generated HTML into the wrapper
-//     graphWrapper.innerHTML = content;
-//   };
-  
-//   // Call the function with the top 10 most populated countries
-//   document.addEventListener("DOMContentLoaded", () => {
-//     renderPopulationGraph(countries);
-//   });
-  
 
