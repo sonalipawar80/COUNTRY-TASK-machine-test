@@ -92,46 +92,6 @@ const capSortHandler = () => {
 }
 
 
-// -----------------------secondtaskPractice---------------------
-// capSortHandler();
-
-// let capAssending=true;
-// const capSortHandler=()=>{
-
-//     CapIcon.classList.remove('d-none');
-//     NameIcon.classList.add('d-none');
-//     PopuIcon.classList.add('d-none');
-
-// CapIcon.classList.add('fa-arrow-down',capAssending)
-// CapIcon.classList.toggle('fa-arrow-down',!capAssending)
-// CapIcon.classList.remove('fa-arrow-down')
-// CapIcon.classList.add('fa-arrow-up')
-//         countries.sort((a,b)=>{
-//             const capitalA=a.capital.toLowerCase();
-//             const capitalB=b.capital.toLowerCase();
-//             if(capAssending){
-//                 return capitalA>capitalB?1:capitalA>capitalB?-1:0
-//             }else{
-//                 return capitalA < capitalB?1:capitalA < capitalB?-1:0
-//             }
-//         });
-
-//         if(capAssending){
-//             CapIcon.classList.remove('fa-arrow-down');
-//             CapIcon.classList.add('fa-arrow-up');
-//         }else{
-//             CapIcon.classList.remove('fa-arrow-up');
-//             CapIcon.classList.add('fa-arrow-down');
-
-//         }
-
-
-//     capAssending=!capAssending
-//     renderCountries();
-// }
-
-// ---------------------------3rd funt------------------------
-
 
 let populAssending = true;
 
@@ -154,36 +114,6 @@ const populationSortHandler = () => {
     populAssending = !populAssending
     renderCountries();
 }
-// ---------------------------------------------------------------------------------------------------------------------------------
-// const handleInput=(event)=>{
-//     const query =event.target.value.toLowerCase();
-//     const filteredCountries = countries.filter(country=> country.name.toLowerCase().includes(query));
-//     renderCountries(filteredCountries);
-// }
-
-// function renderCountries(filteredCountries){
-//     const resultDiv=document.getElementById("result");
-//     if(filteredCountries.length ===0){
-//         resultDiv.textContent="no coutry is found.";
-//         return;
-//     }
-
-//     resultDiv.innerHTML=filteredCountries.map(country=>`<p>${country.name} (${country.capital}) (${country.languages}) </p>`).join("");
-// }
-// -----------------------------------------------------------------------------------------------------------------------------------------
-// const keySearch = (eve) => {
-//     let searchalpha = eve.target.value.toLowerCase();
-
-//     // const countiesfind = countries.filter(country => {
-//     //     return country.name.toLowerCase().includes(searchAphabet) || (country.capital && country.capital.toLowerCase().includes(searchAphabet)) || country.languages.some(lang => lang.toLowerCase().includes(searchAphabet))
-//     // });
-//     const countryFinder =countries.filter(country=>{
-//         return (country.name.toLowerCase().includes(searchalpha)||(country.capital.toLowerCase().includes(searchalpha))|| ((country.languages).some(lang=>lang.toLowerCase().includes(searchalpha))));
-//     })
-//     renderCountries(countryFinder);
-// };
-
-// || country.languages.some(lang => lang.toLowerCase().includes(searchWords))
 
 const onKeyUp = (eve) => {
     let searchWords = eve.target.value.toLowerCase();
